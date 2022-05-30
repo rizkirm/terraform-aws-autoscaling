@@ -154,7 +154,7 @@ resource "aws_autoscaling_group" "main" {
   }
 
   tags = concat(
-    list(
+    [
       {
         key                 = "Name"
         value               = module.asg_name.name
@@ -185,7 +185,7 @@ resource "aws_autoscaling_group" "main" {
         value               = "terraform"
         propagate_at_launch = false
       }
-    ),
+    ],
     var.asg_tags
   )
 
