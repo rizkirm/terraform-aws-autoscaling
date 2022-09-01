@@ -273,3 +273,9 @@ variable "delete_network_interface_on_termination" {
   description = "Whether the network interface will be deleted on termination"
   default     = "true"
 }
+
+variable "asg_time_sleep_before_destroy" {
+  type        = string
+  description = "Time delay before destroy old ASG"
+  default     = "0s"
+}

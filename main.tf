@@ -200,3 +200,15 @@ resource "aws_autoscaling_group" "main" {
     create_before_destroy = true
   }
 }
+
+resource "time_sleep" "wait_before_destroy" {
+  destroy_duration = var.asg_time_sleep_before_destroy
+
+  triggers = {
+    asg_id = aws_autoscaling_group.main.id
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
