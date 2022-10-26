@@ -65,6 +65,12 @@ resource "aws_launch_template" "main" {
     }
   }
 
+  metadata_options {
+    http_endpoint               = var.metadata_http_endpoint
+    http_tokens                 = var.metadata_http_tokens
+    http_put_response_hop_limit = var.metadata_http_put_response_hop_limit
+  }
+
   tags = {
     Name          = module.launch_template_name.name
     Service       = var.service_name
