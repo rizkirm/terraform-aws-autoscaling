@@ -47,20 +47,20 @@ variable "asg_clb_names" {
 }
 
 variable "asg_min_capacity" {
-  type        = string
-  default     = "0"
+  type        = number
+  default     = 0
   description = "The created ASG will have this number of instances at minimum"
 }
 
 variable "asg_max_capacity" {
-  type        = string
-  default     = "0"
+  type        = number
+  default     = 0
   description = "The created ASG will have this number of instances at maximum"
 }
 
 variable "asg_desired_capacity" {
-  type        = string
-  default     = "2"
+  type        = number
+  default     = 2
   description = "The created ASG will have this number of instances at desired"
 }
 
@@ -71,14 +71,14 @@ variable "asg_health_check_type" {
 }
 
 variable "asg_health_check_grace_period" {
-  type        = string
-  default     = "300"
+  type        = number
+  default     = 300
   description = "Time, in seconds, to wait for new instances before checking their health"
 }
 
 variable "asg_default_cooldown" {
-  type        = string
-  default     = "300"
+  type        = number
+  default     = 300
   description = "Time, in seconds, the minimum interval of two scaling activities"
 }
 
@@ -199,14 +199,14 @@ variable "image_owners" {
 }
 
 variable "monitoring" {
-  type        = string
-  default     = "true"
+  type        = bool
+  default     = true
   description = "The spawned instances will have enhanced monitoring if enabled"
 }
 
 variable "ebs_optimized" {
-  type        = string
-  default     = "false"
+  type        = bool
+  default     = false
   description = "The spawned instances will have EBS optimization if enabled"
 }
 
@@ -223,24 +223,27 @@ variable "volume_size" {
 }
 
 variable "volume_type" {
-  description = "The type of volume. Can be standard, gp2, or io1"
+  description = "The type of volume. Can be standard, gp3, gp2, or io1"
   type        = string
-  default     = "gp2"
+  default     = "gp3"
 }
 
 variable "delete_on_termination" {
+  type        = bool
   description = "Whether the volume should be destroyed on instance termination"
-  default     = "true"
+  default     = true
 }
 
 variable "ebs_encryption" {
+  type        = bool
   description = "Whether the volume will be encrypted or not"
-  default     = "false"
+  default     = false
 }
 
 variable "associate_public_ip" {
+  type        = bool
   description = "Whether to associate public IP to the instance"
-  default     = "false"
+  default     = false
 }
 
 variable "use_mixed_instances_policy" {
@@ -255,10 +258,10 @@ variable "mixed_instances_distribution" {
 
   default = {
     on_demand_allocation_strategy            = "prioritized"
-    on_demand_base_capacity                  = "0"
-    on_demand_percentage_above_base_capacity = "100"
+    on_demand_base_capacity                  = 0
+    on_demand_percentage_above_base_capacity = 100
     spot_allocation_strategy                 = "lowest-price"
-    spot_instance_pools                      = "2"
+    spot_instance_pools                      = 2
     spot_max_price                           = ""
   }
 }
@@ -270,8 +273,9 @@ variable "disable_api_termination" {
 }
 
 variable "delete_network_interface_on_termination" {
+  type        = bool
   description = "Whether the network interface will be deleted on termination"
-  default     = "true"
+  default     = true
 }
 
 variable "asg_time_sleep_before_destroy" {
@@ -296,4 +300,10 @@ variable "metadata_http_put_response_hop_limit" {
   type        = number
   description = "The desired HTTP PUT response hop limit for instance metadata requests. Can be an integer from 1 to 64"
   default     = 1
+}
+
+variable "capacity_rebalance" {
+  type        = bool
+  default     = false
+  description = "To proactively handle spot interruption, reference: https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-capacity-rebalancing.html"
 }

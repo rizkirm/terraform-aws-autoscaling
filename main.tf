@@ -1,12 +1,12 @@
 module "launch_template_name" {
-  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.20.0"
+  source = "git@github.com:traveloka/terraform-aws-resource-naming.git?ref=v0.24.1"
 
   name_prefix   = "${var.service_name}-${var.cluster_role}"
   resource_type = "launch_configuration"
 }
 
 module "asg_name" {
-  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.20.0"
+  source = "git@github.com:traveloka/terraform-aws-resource-naming.git?ref=v0.24.1"
 
   name_prefix   = "${var.service_name}-${var.cluster_role}"
   resource_type = "autoscaling_group"
@@ -117,7 +117,7 @@ resource "aws_autoscaling_group" "main" {
   target_group_arns         = var.asg_lb_target_group_arns
   load_balancers            = var.asg_clb_names
   termination_policies      = var.asg_termination_policies
-
+  capacity_rebalance        = var.capacity_rebalance
 
   dynamic "launch_template" {
     for_each = var.use_mixed_instances_policy == false ? ["use plain launch template"] : []
